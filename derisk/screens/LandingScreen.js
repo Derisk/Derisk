@@ -36,10 +36,10 @@ export default class LandingScreen extends React.Component {
   render() {
     return (
       <Wallpaper 
-      src={require('../assets/images/wallpaper.jpg')}
+      src={require('../assets/images/wallpaper_alt.jpg')}
       style={styles.fullWidth}>
         <View style={styles.logoContainer}>
-          <Text style={styles.logo}>Derisk</Text>
+          <Text style={styles.logo}>DERISK</Text>
         </View>
         <TouchableOpacity style={styles.landingButton} onPress={this._leaveLanding}>
         </TouchableOpacity>
@@ -59,10 +59,14 @@ const styles = StyleSheet.create({
     marginRight: 20
   },
   logoContainer: {
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0.25)',
+    flex: 1
   },
   logo: {
-    fontSize: 36,
+    fontSize: 60,
+    fontFamily: 'Catamaran',
     color: 'white'
   },
   fullWidth: {
