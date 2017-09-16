@@ -21,9 +21,6 @@ import { Actions, ActionConst } from 'react-native-router-flux';
 import { MonoText } from '../components/StyledText';
 
 export default class HomeScreen extends React.Component {
-  static navigationOptions = {
-      title: 'Home'
-    }
   constructor(props) {
     super(props);
 
@@ -137,6 +134,7 @@ export default class HomeScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 15,
     flex: 1,
     backgroundColor: 'transparent',
     flexDirection: 'column',
