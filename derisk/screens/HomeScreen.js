@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Button
 } from 'react-native';
 import { WebBrowser } from 'expo';
 
@@ -15,6 +16,7 @@ import Wallpaper from '../components/Wallpaper';
 import Button from '../components/Button';
 
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { Actions, ActionConst } from 'react-native-router-flux';
 
 import { Actions, ActionConst } from 'react-native-router-flux';
 
