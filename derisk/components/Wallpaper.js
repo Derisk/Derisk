@@ -11,27 +11,26 @@ import PropTypes from 'prop-types';
 export default class Wallpaper extends Component {
   static propTypes = {
     src: PropTypes.number
+  };
+
+  render() {
+    const { src } = this.props;
+
+    return (
+        <Image style={styles.picture} source={src}>
+            {this.props.children}
+        </Image>
+    );
   }
-
-    render() {
-      const { src } = this.props;
-      console.log(src)
-
-        return (
-            <Image style={styles.picture} source={src}>
-                {this.props.children}
-            </Image>
-        );
-    }
 }
 
 const styles = StyleSheet.create({
-    picture: {
-        flex: 1,
-        width: null,
-        height: null,
-        resizeMode: 'cover',
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-    },
+  picture: {
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: 'cover',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+  },
 });
