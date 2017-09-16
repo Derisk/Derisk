@@ -35,9 +35,20 @@ export default class HomeScreen extends React.Component {
   handleSubmit() {
     const { title, marker, description } = this.state;
     if (title && marker) {
+      this.setState({ errorMessage: '' });
       Actions.resultScreen({ title, marker, description });
     } else {
-      console.log('missing fields!');
+      this.setState({ errorMessage: "Missing Fields" })
+    }
+  }
+
+  renderAlert() {
+    if (this.state.errorMessage) {
+      return (
+        <Text style={styles.error}>
+          {this.state.errorMessage}
+        </Text>
+      );
     }
   }
 
@@ -58,7 +69,10 @@ export default class HomeScreen extends React.Component {
                     language: 'en',
                     types: '(cities)'
                 }}
+                onFail={() => console.log('FAIL!')}
+                onNotFound={() => console.log('NOT FOUND!')}
                 onPress={(data, details = null) => {
+                  console.log('here',details);
                   this.setState({ title: details.formatted_address, marker: details.geometry.location });
                 }}
                 styles={{
@@ -87,6 +101,7 @@ export default class HomeScreen extends React.Component {
             <Button onPress={this.handleSubmit.bind(this)}>
               GO!
             </Button>
+            {this.renderAlert()}
           </ScrollView>
       </View>
       </Wallpaper>
@@ -103,5 +118,8 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     marginLeft: 20,
     marginRight: 20
+  },
+  error: {
+    borderWidth: 1
   }
 });
