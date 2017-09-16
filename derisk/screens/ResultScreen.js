@@ -35,7 +35,7 @@ export default class ResultScreen extends React.Component {
   }
 
   componentDidMount() {
-    this.map.fitToSuppliedMarkers([MARKER_IDENTIFIER]);
+    //this.map.fitToSuppliedMarkers([MARKER_IDENTIFIER]);
   }
 
   onRegionChange(region) {
@@ -75,7 +75,10 @@ export default class ResultScreen extends React.Component {
 
     return (
       <View style={styles.container}>
-        <MapView ref={ref => { this.map = ref; }} onRegionChange={this.onRegionChange.bind(this)} style={styles.map}>
+        <MapView
+        ref={(ref) => { console.log(ref);this.map = ref }} 
+        onRegionChange={this.onRegionChange.bind(this)} 
+        style={styles.map}>
           <MapView.Marker
             identifier={MARKER_IDENTIFIER}
             coordinate={this.state.marker.latlng}
