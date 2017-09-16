@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 
 export default class Wallpaper extends Component {
   static propTypes = {
-    src: PropTypes.string.isRequired
+    src: PropTypes.number
   }
 
     render() {
@@ -18,7 +18,7 @@ export default class Wallpaper extends Component {
       console.log(src)
 
         return (
-            <Image style={styles.picture} source={require(src)}>
+            <Image style={styles.picture} source={src}>
                 {this.props.children}
             </Image>
         );

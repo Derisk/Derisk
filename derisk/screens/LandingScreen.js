@@ -36,7 +36,7 @@ export default class LandingScreen extends React.Component {
   render() {
     return (
       <Wallpaper 
-      src='../assets/images/wallpaper.jpg'
+      src={require('../assets/images/wallpaper.jpg')}
       style={styles.fullWidth}>
         <View style={styles.logoContainer}>
           <Text style={styles.logo}>Derisk</Text>
