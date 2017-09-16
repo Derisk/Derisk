@@ -1,6 +1,8 @@
 function Get(yourUrl){
     var Httpreq = new XMLHttpRequest(); // a new request
     Httpreq.open("GET", yourUrl, false);
+    Httpreq.setRequestHeader("x-ibm-client-id", "7216b8fc-4815-43e4-bc20-1614e35aec09")
+    Httpreq.setRequestHeader("x-ibm-client-secret", "iX0dP6tS0jA0tR6uR5yH6eO7pV6bS0fL4gW8mW6gI5kG8rU2nU")
     Httpreq.send(null);
     return JSON.parse(Httpreq.responseText);
 }
@@ -8,6 +10,7 @@ function Get(yourUrl){
 lat = "55.84972"
 long = "-2.10678"
 apiKey = "626505b9091f4982a505b9091f798235"
+baseUrl = "https://api.us.apiconnect.ibmcloud.com/infomichaelwellnerde-dev/hackzurich/"
 
 function runAll() {
     getLeisureTravelIndex();
@@ -18,8 +21,8 @@ function runAll() {
 }
 /*********************** Forecast (BEGIN) ***********************/
 function getforecast() {
-    var url = "https://api.weather.com/v2/indices/forecast/intraday/15day?geocode=" + lat + "," + long +
-        "&language=en-US&format=json&apiKey=" + apiKey
+    var url = baseUrl + "/15day?geocode=" + lat + "," + long +
+        "&language=en-US&format=json"
     var response = Get(url);
     var result = new Array(7);
     for (i = 0; i < 7; i++) {
@@ -33,8 +36,8 @@ function getforecast() {
 
 /*********************** Lifestyle (BEGIN) ***********************/
 function getLeisureTravelIndex() {
-    var url = "https://api.weather.com/v2/indices/travel/daypart/15day?geocode=" + lat + "," + long +
-        "&language=en-US&format=json&apiKey=" + apiKey
+    var url = baseUrl + "v2/indices/travel/daypart/15day?geocode=" + lat + "," + long +
+        "&language=en-US&format=json"
     var response = Get(url);
     var result = new Array(7);
     for (i = 0; i < 7; i++) {
@@ -46,8 +49,8 @@ function getLeisureTravelIndex() {
 }
 
 function getAchesAndPainsIndex(){
-    var url = "https://api.weather.com/v2/indices/drivingDifficulty/daypart/15day?geocode=" + lat + "," + long +
-        "&language=en-US&format=json&apiKey=" + apiKey
+    var url = baseUrl + "v2/indices/achePain/daypart/15day?geocode=" + lat + "," + long +
+        "&language=en-US&format=json"
     var response = Get(url);
     var result = new Array(7);
     for (i = 0; i < 7; i++) {
@@ -59,8 +62,8 @@ function getAchesAndPainsIndex(){
 }
 
 function getDrivingDifficultyIndex(){
-    var url = "https://api.weather.com/v2/indices/drivingDifficulty/daypart/15day?geocode=" + lat + "," + long +
-        "&language=en-US&format=json&apiKey=" + apiKey
+    var url = baseUrl + "v2/indices/drivingDifficulty/daypart/15day?geocode=" + lat + "," + long +
+        "&language=en-US&format=json"
     var response = Get(url);
     var result = new Array(7);
     for (i = 0; i < 7; i++) {
@@ -72,8 +75,8 @@ function getDrivingDifficultyIndex(){
 }
 
 function getFrostPotentialIndex(){
-    var url = "https://api.weather.com/v2/indices/frost/daypart/15day?geocode=" + lat + "," + long +
-        "&language=en-US&format=json&apiKey=" + apiKey
+    var url = baseUrl + "v2/indices/frost/daypart/15day?geocode=" + lat + "," + long +
+        "&language=en-US&format=json"
     var response = Get(url);
     var result = new Array(7);
     for (i = 0; i < 7; i++) {
@@ -85,8 +88,8 @@ function getFrostPotentialIndex(){
 }
 
 function getHeatCoolIndex(){
-    var url = "https://api.weather.com/v2/indices/heatCool/daypart/15day?geocode=" + lat + "," + long +
-        "&language=en-US&format=json&apiKey=" + apiKey
+    var url = baseUrl + "v2/indices/heatCool/daypart/15day?geocode=" + lat + "," + long +
+        "&language=en-US&format=json"
     var response = Get(url);
     var result = new Array(7);
     for (i = 0; i < 7; i++) {
