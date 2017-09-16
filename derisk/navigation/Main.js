@@ -1,4 +1,7 @@
 import React from 'react';
+import {
+  StyleSheet
+} from 'react-native';
 import { Router, Scene, Actions, ActionConst } from 'react-native-router-flux';
 
 import LocationScreen from '../screens/LocationScreen';
@@ -31,7 +34,11 @@ export default class Main extends React.Component {
 
   render() {
     return (
-      <Router>
+      <Router 
+        navigationBarStyle={styles.navBar}
+        titleStyle={styles.navBarTitle} 
+        barButtonTextStyle={styles.barButtonTextStyle} 
+        barButtonIconStyle={styles.barButtonIconStyle}>
         <Scene key="root">
           <Scene key="landingScreen"
             component={LandingScreen}
@@ -54,3 +61,18 @@ export default class Main extends React.Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  navBar: {
+    backgroundColor: '#4a5159',
+  },
+  navBarTitle:{
+    color:'#fff'
+  },
+  barButtonTextStyle:{
+      color:'#fff'
+  },
+  barButtonIconStyle:{
+      tintColor:'#fff'
+  },
+});
