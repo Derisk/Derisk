@@ -2,56 +2,58 @@ import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { MapView } from 'expo';
 
+const MARKER_IDENTIFIER = "marker";
+
 export default class ResultScreen extends React.Component {
-    static navigationOptions = {
-        title: 'Results',
+  static navigationOptions = {
+    title: 'Results',
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      marker: {
+        latlng: {
+          latitude: props.marker.lat,
+          longitude: props.marker.lng
+        },
+        title: props.title,
+        description: props.description
+      }
     };
+  }
 
-    constructor(props) {
-        super(props);
+  componentDidMount() {
+    this.map.fitToSuppliedMarkers([MARKER_IDENTIFIER]);
+  }
 
-        this.state = {
-            region: {
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-            },
-            marker: {
-                latlng: {
-                    latitude: 37.78825,
-                    longitude: -122.4324
-                },
-                title: "location",
-                description: "description"
-            }
-        };
-    }
+  onRegionChange(region) {
+    this.setState({ region });
+  }
 
-    onRegionChange(region) {
-        this.setState({ region });
-    }
-
-    render() {
-        return (
-            <MapView
-                style={{ flex: 1 }}
-                region={this.state.region}
-                onRegionChange={this.onRegionChange.bind(this)}>
-                <MapView.Marker
-                    coordinate={this.state.marker.latlng}
-                    title={this.state.marker.title}
-                    description={this.state.marker.description}
-                />
-            </MapView>
-        );
-    }
+  render() {
+    return (
+      <MapView
+        ref={ref => { this.map = ref; }}
+        region={this.state.region}
+        onRegionChange={this.onRegionChange.bind(this)}>
+        style={{ flex: 1 }}
+        <MapView.Marker
+          identifier={MARKER_IDENTIFIER}
+          coordinate={this.state.marker.latlng}
+          title={this.state.marker.title}
+          description={this.state.marker.description}
+        />
+      </MapView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingTop: 15,
-        backgroundColor: '#fff'
-    }
+  container: {
+    flex: 1,
+    paddingTop: 15,
+    backgroundColor: '#fff'
+  }
 });

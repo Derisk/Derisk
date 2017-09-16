@@ -44,7 +44,7 @@ export default class Main extends React.Component {
             animation='fade'
             hideNavBar={true}
           />
-          <Scene key="resultsScreen"
+          <Scene key="resultScreen"
             component={ResultScreen}
             animation='fade'
             hideNavBar={true}

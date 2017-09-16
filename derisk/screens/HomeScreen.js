@@ -18,21 +18,40 @@ import Button from '../components/Button';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { Actions, ActionConst } from 'react-native-router-flux';
 
+import { Actions, ActionConst } from 'react-native-router-flux';
+
 import { MonoText } from '../components/StyledText';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
-        title: 'Input Information',
-        headerLeft:<Button title='Back' onPress={() => Actions.pop()} />
-    };
-
-
+    title: 'Home',
+  };
   constructor(props) {
     super(props);
 
     this.state = {
       description: ''
     };
+  }
+
+  handleSubmit() {
+    const { title, marker, description } = this.state;
+    if (title && marker) {
+      this.setState({ errorMessage: '' });
+      Actions.resultScreen({ title, marker, description });
+    } else {
+      this.setState({ errorMessage: "Missing Fields" })
+    }
+  }
+
+  renderAlert() {
+    if (this.state.errorMessage) {
+      return (
+        <Text style={styles.error}>
+          {this.state.errorMessage}
+        </Text>
+      );
+    }
   }
 
   render() {
@@ -52,9 +71,11 @@ export default class HomeScreen extends React.Component {
                     language: 'en',
                     types: '(cities)'
                 }}
-                onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
-                  console.log(data);
-                  console.log(details);
+                onPress={(data, details = null) => {
+                  this.setState({ title: details.formatted_address, marker: details.geometry.location });
+                }}
+                textInputProps={{
+                  clearButtonMode: 'never'
                 }}
                 styles={{
                   textInputContainer: {
@@ -79,9 +100,10 @@ export default class HomeScreen extends React.Component {
             <TextInput placeholder='Describe your business...' multiline={true} numberOfLines={4}
                        onChangeText={(description) => this.setState({ description })}
                        value={this.state.description} />
-            <Button onPress={() => console.log('Here!', this.state)}>
+            <Button onPress={this.handleSubmit.bind(this)}>
               GO!
             </Button>
+            {this.renderAlert()}
           </ScrollView>
       </View>
       </Wallpaper>
@@ -98,5 +120,8 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     marginLeft: 20,
     marginRight: 20
+  },
+  error: {
+    borderWidth: 1
   }
 });
