@@ -22,8 +22,8 @@ const styles = {
   container: {
     marginTop: 15,
     flex: 1,
-    backgroundColor: 'transparent',
-    flexDirection: 'column',
+    backgroundColor: 'green',
+    flexDirection: 'column'
   },
   daysInfoContainer: {
     flexDirection: 'row',
