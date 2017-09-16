@@ -28,6 +28,14 @@ export default class HomeScreen extends React.Component {
     };
   }
 
+  handleSubmit() {
+    if (this.state.title && this.state.marker) {
+      console.log('submit!');
+    } else {
+      console.log('missing fields!');
+    }
+  }
+
   render() {
     return (
       <Wallpaper src={require('../assets/images/wallpaper.jpg')}>
@@ -45,9 +53,8 @@ export default class HomeScreen extends React.Component {
                     language: 'en',
                     types: '(cities)'
                 }}
-                onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
-                  console.log(data);
-                  console.log(details);
+                onPress={(data, details = null) => {
+                  this.setState({ title: details.formatted_address, marker: details.geometry.location });
                 }}
                 styles={{
                   textInputContainer: {
@@ -72,7 +79,7 @@ export default class HomeScreen extends React.Component {
             <TextInput placeholder='Describe your business...' multiline={true} numberOfLines={4}
                        onChangeText={(description) => this.setState({ description })}
                        value={this.state.description} />
-            <Button onPress={() => console.log('Here!', this.state)}>
+            <Button onPress={this.handleSubmit.bind(this)}>
               GO!
             </Button>
           </ScrollView>
