@@ -1,8 +1,8 @@
 function Get(yourUrl){
     var Httpreq = new XMLHttpRequest(); // a new request
     Httpreq.open("GET", yourUrl, false);
-    Httpreq.setRequestHeader("x-ibm-client-id", "7216b8fc-4815-43e4-bc20-1614e35aec09")
-    Httpreq.setRequestHeader("x-ibm-client-secret", "iX0dP6tS0jA0tR6uR5yH6eO7pV6bS0fL4gW8mW6gI5kG8rU2nU")
+    Httpreq.setRequestHeader("x-ibm-client-id", "7216b8fc-4815-43e4-bc20-1614e35aec09");
+    Httpreq.setRequestHeader("x-ibm-client-secret", "iX0dP6tS0jA0tR6uR5yH6eO7pV6bS0fL4gW8mW6gI5kG8rU2nU");
     Httpreq.send(null);
     return JSON.parse(Httpreq.responseText);
 }
