@@ -10,47 +10,47 @@ import SettingsScreen from '../screens/SettingsScreen';
 import LandingScreen from '../screens/LandingScreen'
 
 export default class Main extends React.Component {
-    _chat() {
-      if (this.state.isLoading) return;
+  _chat() {
+    if (this.state.isLoading) return;
 
-      this.setState({ isLoading: true });
+    this.setState({ isLoading: true });
 
-      Animated.timing(
-          this.growAnimated,
-          {
-              toValue: 1,
-              duration: 300,
-              easing: Easing.linear,
-          }
-      ).start();
+    Animated.timing(
+      this.growAnimated,
+      {
+          toValue: 1,
+          duration: 300,
+          easing: Easing.linear,
+      }
+    ).start();
 
-      setTimeout(() => {
-          Actions.ChatScreen();
-      }, 500);
+    setTimeout(() => {
+      Actions.ChatScreen();
+    }, 500);
   }
 
   render() {
     return (
-        <Router>
-          <Scene key="root">
-            <Scene key="landingScreen"
-              component={LandingScreen}
-              animation='fade'
-              hideNavBar={true}
-              initial={true}
-            />
-            <Scene key="homeScreen"
-              component={HomeScreen}
-              animation='fade'
-              hideNavBar={true}
-            />
-            <Scene key="resultsScreen"
-              component={ResultScreen}
-              animation='fade'
-              hideNavBar={true}
-            />
-          </Scene>
-        </Router>
+      <Router>
+        <Scene key="root">
+          <Scene key="landingScreen"
+            component={LandingScreen}
+            animation='fade'
+            hideNavBar={true}
+            initial={true}
+          />
+          <Scene key="homeScreen"
+            component={HomeScreen}
+            animation='fade'
+            hideNavBar={true}
+          />
+          <Scene key="resultsScreen"
+            component={ResultScreen}
+            animation='fade'
+            hideNavBar={true}
+          />
+        </Scene>
+      </Router>
     );
   }
 }
