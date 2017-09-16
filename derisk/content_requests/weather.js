@@ -20,24 +20,21 @@ function runAll() {
     getHeatCoolIndex();
 }
 /*********************** Forecast (BEGIN) ***********************/
-// NB: Each caller bellow returns seven tuples (one for each day).
-// Each tuple contains numeric value, worded value and the name of the day in the natural language
-// (e.g. tomorrow, day after tomorrow, Thursday, Friday etc)
 function getforecast() {
-    var url = baseUrl + "v2/indices/travel/daypart/15day?geocode=" + lat + "," + long +
-        "&language=en-US&format=json"
+    var url = baseUrl + "v1/geocode/" + lat + "/" + long + "/forecast/daily/7day.json?units=m"
     var response = Get(url);
     var result = new Array(7);
     for (i = 0; i < 7; i++) {
-        result[i] = [response.travelIndex12hour.leisureTravelIndex[i * 2],
-                    response.travelIndex12hour.leisureTravelCategory[i * 2],
-                    response.travelIndex12hour.daypartName[i * 2]];
+        result[i] = response.forecasts[i];
     }
     return result;
 }
 /*********************** Forecast (BEGIN) ***********************/
 
 /*********************** Lifestyle (BEGIN) ***********************/
+// NB: Each caller bellow returns seven tuples (one for each day).
+// Each tuple contains numeric value, worded value and the name of the day in the natural language
+// (e.g. tomorrow, day after tomorrow, Thursday, Friday etc)
 function getLeisureTravelIndex() {
     var url = baseUrl + "v2/indices/travel/daypart/15day?geocode=" + lat + "," + long +
         "&language=en-US&format=json"
