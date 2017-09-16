@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { MapView } from 'expo';
 import ResultInfoHeader from "../components/ResultInfoHeader";
+import ResultInfoDetails from "../components/ResultInfoDetails";
 
 const MARKER_IDENTIFIER = "marker";
 
@@ -57,9 +58,19 @@ export default class ResultScreen extends React.Component {
 
   render() {
     const Modal = <Animated.View style={[styles.modal, { transform: [{translateY: this.state.modalY}] }]}>
-      <TouchableHighlight onPress={this.closeModal.bind(this)} underlayColor="green" style={styles.button}>
-        <Text>Close Modal</Text>
+      <TouchableHighlight onPress={this.closeModal.bind(this)} style={styles.button}>
+        <Text style={styles.closeButton}>X</Text>
       </TouchableHighlight>
+      <ResultInfoDetails title="Discount" recommendation="Expect rough weather. You should give a discount of 20% on wednesday and tuesday because it's stormy."
+                         daysInfo={[
+                           { day: "Sat", degrees: 16, climate: "Sunny" },
+                           { day: "Sun", degrees: 17, climate: "Cloudy" },
+                           { day: "Mon", degrees: 18, climate: "Rainy" },
+                           { day: "Tue", degrees: 18, climate: "Very Rainy" },
+                           { day: "Wed", degrees: 19, climate: "Very Rainy" },
+                           { day: "Thu", degrees: 20, climate: "Cloudy" },
+                           { day: "Fri", degrees: 21, climate: "Sunny" },
+                         ]} />
     </Animated.View>;
 
     return (
@@ -74,7 +85,7 @@ export default class ResultScreen extends React.Component {
         </MapView>
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={this.openModal.bind(this)} style={styles.button}>
-            <ResultInfoHeader degrees="21" climate="Mostly Cloudy" date="Saturday, 16 Sep" />
+            <ResultInfoHeader degrees={21} climate="Mostly Cloudy" date="Saturday, 16 Sep" />
           </TouchableOpacity>
         </View>
         {Modal}
@@ -96,6 +107,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'blue'
+  },
+  closeButton: {
+    paddingRight: 10,
+    paddingLeft: 10
   },
   buttonContainer: {
     alignSelf: 'stretch',
