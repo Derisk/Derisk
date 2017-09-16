@@ -69,11 +69,11 @@ export default class HomeScreen extends React.Component {
                     language: 'en',
                     types: '(cities)'
                 }}
-                onFail={() => console.log('FAIL!')}
-                onNotFound={() => console.log('NOT FOUND!')}
                 onPress={(data, details = null) => {
-                  console.log('here',details);
                   this.setState({ title: details.formatted_address, marker: details.geometry.location });
+                }}
+                textInputProps={{
+                  clearButtonMode: 'never'
                 }}
                 styles={{
                   textInputContainer: {
