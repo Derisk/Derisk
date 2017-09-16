@@ -11,19 +11,19 @@ export default class ResultScreen extends React.Component {
         super(props);
 
         this.state = {
-            region: {
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-            },
+            // region: {
+            //     latitude: 37.78825,
+            //     longitude: -122.4324,
+            //     latitudeDelta: 0.0922,
+            //     longitudeDelta: 0.0421,
+            // },
             marker: {
                 latlng: {
-                    latitude: 37.78825,
-                    longitude: -122.4324
+                    latitude: props.marker.lat,
+                    longitude: props.marker.lng
                 },
-                title: "location",
-                description: "description"
+                title: props.title,
+                description: props.description
             }
         };
     }

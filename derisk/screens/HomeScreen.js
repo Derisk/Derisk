@@ -16,10 +16,14 @@ import Button from '../components/Button';
 
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
+import { Actions, ActionConst } from 'react-native-router-flux';
+
 import { MonoText } from '../components/StyledText';
 
 export default class HomeScreen extends React.Component {
-
+  static navigationOptions = {
+    title: 'Home',
+  };
   constructor(props) {
     super(props);
 
@@ -29,8 +33,9 @@ export default class HomeScreen extends React.Component {
   }
 
   handleSubmit() {
-    if (this.state.title && this.state.marker) {
-      console.log('submit!');
+    const { title, marker, description } = this.state;
+    if (title && marker) {
+      Actions.resultScreen({ title, marker, description });
     } else {
       console.log('missing fields!');
     }
