@@ -5,6 +5,7 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 
 import Colors from '../constants/Colors';
 
+import LocationScreen from '../screens/LocationScreen';
 import ResultScreen from '../screens/ResultScreen';
 
 import HomeScreen from '../screens/HomeScreen';
@@ -14,10 +15,10 @@ import SettingsScreen from '../screens/SettingsScreen';
 export default TabNavigator(
   {
     Home: {
-      screen: ResultScreen,
+      screen: LocationScreen,
     },
     Links: {
-      screen: LinksScreen,
+      screen: ResultScreen,
     },
     Settings: {
       screen: SettingsScreen,
