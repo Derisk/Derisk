@@ -38,44 +38,7 @@ export default class LandingScreen extends React.Component {
     };
   }
 
-  componentDidMount() {
-    getforecast().then(result => {
-        console.log('getforecast res',result);
-    }).catch(err => {
-        console.error(`getforecast err: ${err}`);
-    });
 
-    getLeisureTravelIndex().then(result => {
-        console.log('getLeisureTravelIndex res:', result);
-    }).catch(err => {
-        console.error(`getLeisureTravelIndex err: ${err}`);
-    });
-
-    getAchesAndPainsIndex().then(result => {
-        console.log('getAchesAndPainsIndex res:', result);
-    }).catch(err => {
-        console.error(`getAchesAndPainsIndex err: ${err}`);
-    });
-
-    getDrivingDifficultyIndex().then(result => {
-        console.log('getDrivingDifficultyIndex res:', result);
-    }).catch(err => {
-        console.error(`getDrivingDifficultyIndex err: ${err}`);
-    });
-
-    getFrostPotentialIndex().then(result => {
-        console.log('getFrostPotentialIndex res:', result);
-    }).catch(err => {
-        console.error(`getFrostPotentialIndex err: ${err}`);
-    });
-
-    getHeatCoolIndex().then(result => {
-        console.log('getHeatCoolIndex res:', result);
-    }).catch(err => {
-        console.error(`getHeatCoolIndex err: ${err}`);
-    });
-
-  }
 
   _leaveLanding() {
     Actions.homeScreen();

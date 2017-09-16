@@ -80,7 +80,9 @@ export default class HomeScreen extends React.Component {
                       color: '#fff',
                       backgroundColor: 'transparent',
                       fontSize: 18,
-                      borderRadius: 15
+                      borderRadius: 15,
+                      alignItems: 'center',
+                      alignSelf: 'center'
                     },
                     predefinedPlacesDescription: {
                       color: '#1faadb'
