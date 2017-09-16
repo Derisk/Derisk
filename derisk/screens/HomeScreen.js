@@ -22,14 +22,14 @@ export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      desc: ''
+      text: ''
     };
   }
 
   render() {
     return (
       <Wallpaper
-      src=''
+      src={require('../assets/images/wallpaper.jpg')}
       >
       <View style={styles.container}>
         <ScrollView
@@ -73,8 +73,8 @@ export default class HomeScreen extends React.Component {
             placeholder='Describe your business...'
             multiline={true}
             numberOfLines={4}
-            onChangeText={(text) => this.setState({desc})}
-            value={this.state.desc}/>
+            onChangeText={(text) => this.setState({text})}
+            value={this.state.text}/>
 
         </ScrollView>
       </View>
