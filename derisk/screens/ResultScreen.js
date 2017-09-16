@@ -1,27 +1,26 @@
 import React from 'react';
 import {
   View,
-  TouchableOpacity,
   Text,
+  TouchableOpacity,
+  TouchableHighlight,
+  Animated,
+  Dimensions,
   StyleSheet
 } from 'react-native';
 import { MapView } from 'expo';
-import Modal from 'react-native-modalbox';
-import { Actions, ActionConst } from 'react-native-router-flux';
 
 const MARKER_IDENTIFIER = "marker";
 
-export default class ResultScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Results',
-  };
+let deviceHeight = Dimensions.get('window').height;
+let deviceWidth = Dimensions.get('window').width;
 
+export default class ResultScreen extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isModalOpen: false,
-      sliderValue: 0.3,
+      modalY: new Animated.Value(-deviceHeight),
       marker: {
         latlng: {
           latitude: props.marker.lat,
@@ -41,7 +40,27 @@ export default class ResultScreen extends React.Component {
     this.setState({ region });
   }
 
+  openModal() {
+    Animated.timing(this.state.modalY, {
+      duration: 300,
+      toValue: 0
+    }).start();
+  }
+
+  closeModal() {
+    Animated.timing(this.state.modalY, {
+      duration: 300,
+      toValue: -deviceHeight
+    }).start();
+  }
+
   render() {
+    const Modal = <Animated.View style={[styles.modal, { transform: [{translateY: this.state.modalY}] }]}>
+      <TouchableHighlight onPress={this.closeModal.bind(this)} underlayColor="green" style={styles.button}>
+        <Text>Close Modal</Text>
+      </TouchableHighlight>
+    </Animated.View>;
+
     return (
       <View style={styles.container}>
         <MapView ref={ref => { this.map = ref; }} onRegionChange={this.onRegionChange.bind(this)} style={styles.map}>
@@ -53,21 +72,11 @@ export default class ResultScreen extends React.Component {
           />
         </MapView>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={() => this.modal.open()} style={styles.button}>
+          <TouchableOpacity onPress={this.openModal.bind(this)} style={styles.button}>
             <Text>TEST!</Text>
           </TouchableOpacity>
         </View>
-
-        <Modal
-          style={styles.modal}
-          ref={ref => { this.modal = ref; }}
-          position={"bottom"}
-          swipeArea={20}
-          swipeToClose={true}
-          onClosed={() => this.setState({isModalOpen: false})}
-          onOpen={() => this.setState({isModalOpen: true})}>
-          <Text>Basic modal</Text>
-        </Modal>
+        {Modal}
       </View>
     );
   }
@@ -93,6 +102,7 @@ const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     backgroundColor: 'blue',
-    padding: 15
-  },
+    paddingTop: 30,
+    paddingBottom: 15
+  }
 });
