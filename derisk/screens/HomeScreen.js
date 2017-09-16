@@ -37,20 +37,7 @@ export default class HomeScreen extends React.Component {
   handleSubmit() {
     const { title, marker, description } = this.state;
     if (title && marker) {
-      this.setState({ errorMessage: '' });
       Actions.resultScreen({ title, marker, description });
-    } else {
-      this.setState({ errorMessage: "Missing Fields" })
-    }
-  }
-
-  renderAlert() {
-    if (this.state.errorMessage) {
-      return (
-        <Text style={styles.error}>
-          {this.state.errorMessage}
-        </Text>
-      );
     }
   }
 
@@ -141,7 +128,6 @@ export default class HomeScreen extends React.Component {
                 </Button>
               </ScrollView>
             )}
-            {this.renderAlert()}
           </ScrollView>
       </View>
       </Wallpaper>
@@ -161,9 +147,6 @@ const styles = StyleSheet.create({
     marginRight: 20,
     flexDirection: 'column',
     flex: 1,
-  },
-  error: {
-    borderWidth: 1
   },
   description: {
     backgroundColor: '#4a5159',

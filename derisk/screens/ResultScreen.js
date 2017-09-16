@@ -36,9 +36,8 @@ export default class ResultScreen extends React.Component {
     return (
       <MapView
         ref={ref => { this.map = ref; }}
-        region={this.state.region}
-        onRegionChange={this.onRegionChange.bind(this)}>
-        style={{ flex: 1 }}
+        onRegionChange={this.onRegionChange.bind(this)}
+        style={{ flex: 1 }}>
         <MapView.Marker
           identifier={MARKER_IDENTIFIER}
           coordinate={this.state.marker.latlng}
