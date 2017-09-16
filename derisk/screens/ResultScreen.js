@@ -9,6 +9,7 @@ import {
   StyleSheet
 } from 'react-native';
 import { MapView } from 'expo';
+import ResultInfoHeader from "../components/ResultInfoHeader";
 
 const MARKER_IDENTIFIER = "marker";
 
@@ -73,7 +74,7 @@ export default class ResultScreen extends React.Component {
         </MapView>
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={this.openModal.bind(this)} style={styles.button}>
-            <Text>TEST!</Text>
+            <ResultInfoHeader degrees="21" climate="Mostly Cloudy" date="Saturday, 16 Sep" />
           </TouchableOpacity>
         </View>
         {Modal}
