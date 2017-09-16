@@ -1,8 +1,9 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { AppRegistry, Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
+import Main from './navigation/Main'
 
 export default class App extends React.Component {
   state = {
@@ -22,7 +23,7 @@ export default class App extends React.Component {
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
           {Platform.OS === 'android' &&
             <View style={styles.statusBarUnderlay} />}
-          <RootNavigation />
+            <Main/>
         </View>
       );
     }
@@ -67,3 +68,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.2)',
   },
 });
+
+AppRegistry.registerComponent('App', () => App);

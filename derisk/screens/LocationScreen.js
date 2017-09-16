@@ -1,42 +1,15 @@
 import React from 'react';
-import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import { WebBrowser } from 'expo';
-
-import Wallpaper from '../components/Wallpaper';
-
+import { ScrollView, StyleSheet } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
-import { MonoText } from '../components/StyledText';
-
-export default class HomeScreen extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = { 
-      desc: ''
+export default class LocationScreen extends React.Component {
+    static navigationOptions = {
+        title: 'Location',
     };
-  }
 
-  render() {
-    return (
-      <Wallpaper
-      src=''
-      >
-      <View style={styles.container}>
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}>
-
-          <ScrollView style={styles.container}>
+    render() {
+        return (
+            <ScrollView style={styles.container}>
                 <GooglePlacesAutocomplete
                     placeholder='Enter Location'
                     minLength={2}
@@ -68,29 +41,14 @@ export default class HomeScreen extends React.Component {
                     currentLocation={false}
                 />
             </ScrollView>
-
-          <TextInput
-            placeholder='Describe your business...'
-            multiline={true}
-            numberOfLines={4}
-            onChangeText={(text) => this.setState({desc})}
-            value={this.state.desc}/>
-
-        </ScrollView>
-      </View>
-      </Wallpaper>
-    );
-  }
+        );
+    }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  contentContainer: {
-    paddingTop: 30,
-    marginLeft: 20,
-    marginRight: 20
-  }
+    container: {
+        flex: 1,
+        paddingTop: 15,
+        backgroundColor: '#fff',
+    },
 });
