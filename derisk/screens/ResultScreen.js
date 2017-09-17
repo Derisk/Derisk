@@ -13,6 +13,8 @@ import { MapView } from 'expo';
 import ResultInfoHeader from "../components/ResultInfoHeader";
 import ResultInfoDetails from "../components/ResultInfoDetails";
 
+import { Actions, ActionConst } from 'react-native-router-flux';
+
 import {
   getforecast, 
   getLeisureTravelIndex,
@@ -35,6 +37,9 @@ export default class ResultScreen extends React.Component {
       modalY: new Animated.Value(-deviceHeight),
       activeSlide: 0,
       sliderRef: null,
+      headerTemp: 21,
+      headerClimate: 'Cloudy',
+      headerDate: 'Tuesday, 19 Sep',
       marker: {
         latlng: {
           latitude: props.marker.lat,
@@ -74,39 +79,13 @@ export default class ResultScreen extends React.Component {
 
   componentDidMount() {
     getforecast().then(result => {
-        console.log('getforecast res',result);
+      var forecastData = (result[0].day) ? result[0].day : result[0].night;
+      var temp = parseInt(forecastData.temp);
+      var climate = forecastData.phrase_32char;
+      this.setState({headerTemp: temp, headerClimate: climate, headerDate: 'Sunday, 17 Sep'});
+
     }).catch(err => {
         console.error(`getforecast err: ${err}`);
-    });
-
-    getLeisureTravelIndex().then(result => {
-        console.log('getLeisureTravelIndex res:', result);
-    }).catch(err => {
-        console.error(`getLeisureTravelIndex err: ${err}`);
-    });
-
-    getAchesAndPainsIndex().then(result => {
-        console.log('getAchesAndPainsIndex res:', result);
-    }).catch(err => {
-        console.error(`getAchesAndPainsIndex err: ${err}`);
-    });
-
-    getDrivingDifficultyIndex().then(result => {
-        console.log('getDrivingDifficultyIndex res:', result);
-    }).catch(err => {
-        console.error(`getDrivingDifficultyIndex err: ${err}`);
-    });
-
-    getFrostPotentialIndex().then(result => {
-        console.log('getFrostPotentialIndex res:', result);
-    }).catch(err => {
-        console.error(`getFrostPotentialIndex err: ${err}`);
-    });
-
-    getHeatCoolIndex().then(result => {
-        console.log('getHeatCoolIndex res:', result);
-    }).catch(err => {
-        console.error(`getHeatCoolIndex err: ${err}`);
     });
     //this.map.fitToSuppliedMarkers([MARKER_IDENTIFIER]);
   }
@@ -116,10 +95,11 @@ export default class ResultScreen extends React.Component {
   }
 
   openModal() {
-    Animated.timing(this.state.modalY, {
+    /*Animated.timing(this.state.modalY, {
       duration: 300,
       toValue: 0
-    }).start();
+    }).start();*/
+    Actions.advOne();
   }
 
   closeModal() {
@@ -178,7 +158,11 @@ export default class ResultScreen extends React.Component {
         </MapView>
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={this.openModal.bind(this)} style={styles.button}>
-            <ResultInfoHeader degrees={21} climate="Mostly Cloudy" date="Saturday, 16 Sep" />
+            <ResultInfoHeader 
+            style={styles.headerContainer} 
+            degrees={this.state.headerTemp} 
+            climate={this.state.headerClimate} 
+            date={this.state.headerDate} />
           </TouchableOpacity>
         </View>
         {Modal}
@@ -212,7 +196,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#4a5159',
     paddingTop: 30,
-    paddingBottom: 15
+    paddingBottom: 15,
   },
   paginationContainer: {
     paddingVertical: 8
@@ -222,5 +206,9 @@ const styles = StyleSheet.create({
     height: 8,
     borderRadius: 4,
     marginHorizontal: 8
+  },
+  headerContainer: {
+    ...StyleSheet.absoluteFillObject,
+    flex: 1
   }
 });
