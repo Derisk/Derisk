@@ -46,7 +46,6 @@ export default class Main extends React.Component {
             component={LandingScreen}
             animation='fade'
             hideNavBar={true}
-            initial={true}
           />
           <Scene key="homeScreen"
             component={HomeScreen}
@@ -67,6 +66,8 @@ export default class Main extends React.Component {
             component={AdvOne}
             animation='fade'
             hideNavBar={true}
+            
+            initial={true}
           />
           <Scene key="advTwo"
             component={AdvTwo}
