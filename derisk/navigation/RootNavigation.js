@@ -1,17 +1,39 @@
 import { Notifications } from 'expo';
 import React from 'react';
 import { StackNavigator } from 'react-navigation';
+import { AppRegistry, Text } from 'react-native';
 
 import MainTabNavigator from './MainTabNavigator';
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
+
+import LocationScreen from '../screens/LocationScreen';
+import ResultScreen from '../screens/ResultScreen';
+
+import HomeScreen from '../screens/HomeScreen';
+import LinksScreen from '../screens/LinksScreen';
+import SettingsScreen from '../screens/SettingsScreen';
+import LandingScreen from '../screens/LandingScreen'
 
 const RootStackNavigator = StackNavigator(
   {
     Main: {
       screen: MainTabNavigator,
     },
+    Landing: {
+      screen: LandingScreen
+    },
+    Home: {
+      screen: HomeScreen,
+    },
+    Results: {
+      screen: ResultScreen,
+    },
+    Location: {
+      screen: LocationScreen,
+    },
   },
   {
+    initialRouteName: 'Landing',
     navigationOptions: () => ({
       headerTitleStyle: {
         fontWeight: 'normal',
@@ -52,3 +74,5 @@ export default class RootNavigator extends React.Component {
     );
   };
 }
+
+AppRegistry.registerComponent('RootStackNavigator', () => RootStackNavigator);

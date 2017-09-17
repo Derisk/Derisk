@@ -5,23 +5,31 @@ import { TabNavigator, TabBarBottom } from 'react-navigation';
 
 import Colors from '../constants/Colors';
 
+import LocationScreen from '../screens/LocationScreen';
+import ResultScreen from '../screens/ResultScreen';
+
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import LandingScreen from '../screens/LandingScreen'
 
 export default TabNavigator(
   {
+    Landing: {
+      screen: LandingScreen
+    },
     Home: {
       screen: HomeScreen,
     },
-    Links: {
-      screen: LinksScreen,
+    Results: {
+      screen: ResultScreen,
     },
-    Settings: {
-      screen: SettingsScreen,
+    Location: {
+      screen: LocationScreen,
     },
   },
   {
+    initialRouteName: 'Landing',
     navigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused }) => {
         const { routeName } = navigation.state;
@@ -32,12 +40,17 @@ export default TabNavigator(
               ? `ios-information-circle${focused ? '' : '-outline'}`
               : 'md-information-circle';
             break;
-          case 'Links':
+          case 'Results':
             iconName = Platform.OS === 'ios'
               ? `ios-link${focused ? '' : '-outline'}`
               : 'md-link';
             break;
-          case 'Settings':
+          case 'Landing':
+            iconName = Platform.OS === 'ios'
+              ? `ios-link${focused ? '' : '-outline'}`
+              : 'md-link';
+            break;
+          case 'Location':
             iconName = Platform.OS === 'ios'
               ? `ios-options${focused ? '' : '-outline'}`
               : 'md-options';

@@ -1,8 +1,9 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { AppRegistry, Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
+import Main from './navigation/Main'
 
 export default class App extends React.Component {
   state = {
@@ -22,7 +23,7 @@ export default class App extends React.Component {
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
           {Platform.OS === 'android' &&
             <View style={styles.statusBarUnderlay} />}
-          <RootNavigation />
+            <Main/>
         </View>
       );
     }
@@ -34,13 +35,16 @@ export default class App extends React.Component {
         Asset.loadAsync([
           require('./assets/images/robot-dev.png'),
           require('./assets/images/robot-prod.png'),
+          require('./assets/images/wallpaper.jpg'),
+          require('./assets/images/wallpaper_alt.jpg'),
+          require('./assets/images/bg_location.png'),
         ]),
         Font.loadAsync([
           // This is the font that we are using for our tab bar
           Ionicons.font,
           // We include SpaceMono because we use it in HomeScreen.js. Feel free
           // to remove this if you are not using it in your app
-          { 'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf') },
+          { 'Catamaran': require('./assets/fonts/Catamaran-Regular.ttf') },
         ]),
       ]);
     } catch (e) {
@@ -67,3 +71,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.2)',
   },
 });
+
+AppRegistry.registerComponent('App', () => App);

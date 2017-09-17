@@ -5,203 +5,167 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import { WebBrowser } from 'expo';
+
+import Wallpaper from '../components/Wallpaper';
+import Button from '../components/Button';
+import renderIf from 'render-if'
+
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { Actions, ActionConst } from 'react-native-router-flux';
 
 import { MonoText } from '../components/StyledText';
 
 export default class HomeScreen extends React.Component {
-  static navigationOptions = {
-    header: null,
-  };
+  constructor(props) {
+    super(props);
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
-            <Image
-              source={
-                __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
-              }
-              style={styles.welcomeImage}
-            />
-          </View>
-
-          <View style={styles.getStartedContainer}>
-            {this._maybeRenderDevelopmentModeWarning()}
-
-            <Text style={styles.getStartedText}>Get started by opening</Text>
-
-            <View
-              style={[
-                styles.codeHighlightContainer,
-                styles.homeScreenFilename,
-              ]}>
-              <MonoText style={styles.codeHighlightText}>
-                screens/HomeScreen.js
-              </MonoText>
-            </View>
-
-            <Text style={styles.getStartedText}>
-              Change this text and your app will automatically reload.
-            </Text>
-          </View>
-
-          <View style={styles.helpContainer}>
-            <TouchableOpacity
-              onPress={this._handleHelpPress}
-              style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>
-                Help, it didn’t automatically reload!
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>
-            This is a tab bar. You can edit it in:
-          </Text>
-
-          <View
-            style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>
-              navigation/MainTabNavigator.js
-            </MonoText>
-          </View>
-        </View>
-      </View>
-    );
+    this.state = {
+      description: '',
+      showDesc: false,
+      showSubmit: false
+    };
   }
 
-  _maybeRenderDevelopmentModeWarning() {
-    if (__DEV__) {
-      const learnMoreButton = (
-        <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
-          Learn more
-        </Text>
-      );
-
-      return (
-        <Text style={styles.developmentModeText}>
-          Development mode is enabled, your app will be slower but you can use
-          useful development tools. {learnMoreButton}
-        </Text>
-      );
-    } else {
-      return (
-        <Text style={styles.developmentModeText}>
-          You are not in development mode, your app will run at full speed.
-        </Text>
-      );
+  handleSubmit() {
+    const { title, marker, description } = this.state;
+    if (title && marker) {
+      Actions.resultScreen({ title, marker, description });
     }
   }
 
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/development-mode'
+  render() {
+    return (
+      <Wallpaper src={require('../assets/images/bg_location.png')}>
+        <View style={styles.container}>
+          <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+            <ScrollView>
+              <ScrollView>
+                <GooglePlacesAutocomplete
+                  placeholder='Enter Location'
+                  minLength={2}
+                  autoFocus={false}
+                  returnKeyType={'default'}
+                  fetchDetails={true}
+                  enablePoweredByContainer={false}
+                  query={{
+                      key: 'AIzaSyDJzgCRfB2dQTKAH56rkI369dee0ofRh20',
+                      language: 'en',
+                      types: '(cities)'
+                  }}
+                  onPress={(data, details = null) => {
+                    this.setState({ title: details.formatted_address, marker: details.geometry.location });
+                    if (this.state.title) {
+                      this.setState({showDesc: true})
+                    }
+                  }}
+                  textInputProps={{
+                    clearButtonMode: 'never'
+                  }}
+                  styles={{
+                    textInputContainer: {
+                      backgroundColor: '#4a5159',
+                      borderColor: "#707a91",
+                      justifyContent: 'center',
+                      borderRadius: 15,
+                    },
+                    textInput: {
+                      marginLeft: 0,
+                      marginRight: 0,
+                      height: 38,
+                      color: '#fff',
+                      backgroundColor: 'transparent',
+                      fontSize: 18,
+                      borderRadius: 15
+                    },
+                    predefinedPlacesDescription: {
+                      color: '#1faadb'
+                    },
+                    container: {
+                      backgroundColor: '#4a5159',
+                      borderRadius: 15,
+                      borderColor: '#707a91',
+                      borderWidth: 1
+                    },
+                    description: {
+                      color: '#fff',
+                      backgroundColor: '#4a5159'
+                    },
+                    predefinedPlacesDescription: {
+                      fontSize: 16
+                    }
+                  }}
+                  currentLocation={false}
+                />
+              </ScrollView>
+              {renderIf(this.state.showDesc)(
+                <ScrollView style={styles.descriptionContainer}>
+                  <TextInput placeholder='Describe your business...' multiline={true} numberOfLines={4}
+                     onChangeText={(description) => {
+                      this.setState({ description })
+                      if (this.state.description) {
+                        this.setState({showSubmit: true})
+                      }
+                    }}
+                     value={this.state.description} 
+                     style={styles.description}/>
+                </ScrollView>
+              )}
+            </ScrollView>
+            {renderIf(this.state.showSubmit)(
+              <ScrollView style={styles.buttonContainer} contentContainerStyle={styles.buttonContentContainer}>
+                <Button 
+                style={styles.buttonStyle}
+                onPress={this.handleSubmit.bind(this)}>
+                  NEXT
+                </Button>
+              </ScrollView>
+            )}
+          </ScrollView>
+      </View>
+      </Wallpaper>
     );
-  };
-
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
-  };
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 15,
     flex: 1,
-    backgroundColor: '#fff',
-  },
-  developmentModeText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center',
+    backgroundColor: 'transparent',
+    flexDirection: 'column',
   },
   contentContainer: {
-    paddingTop: 30,
+    paddingTop: 20,
+    marginLeft: 20,
+    marginRight: 20,
+    flexDirection: 'column',
+    flex: 1,
   },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
+  description: {
+    backgroundColor: '#4a5159',
+    color: '#fff',
+    borderRadius: 15,
+    borderWidth: 1,
+    fontSize: 18,
+    borderColor: '#707a91',
+    padding: 5,
   },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
+  descriptionContainer: {
+    paddingTop: 20,
   },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
+  buttonContainer: {
+    flexDirection: 'column',
+    flex: 1,
   },
-  homeScreenFilename: {
-    marginVertical: 7,
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)',
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
-  },
-  tabBarInfoContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-      },
-      android: {
-        elevation: 20,
-      },
-    }),
-    alignItems: 'center',
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 20,
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center',
-  },
-  navigationFilename: {
-    marginTop: 5,
-  },
-  helpContainer: {
-    marginTop: 15,
-    alignItems: 'center',
-  },
-  helpLink: {
-    paddingVertical: 15,
-  },
-  helpLinkText: {
-    fontSize: 14,
-    color: '#2e78b7',
-  },
+  buttonContentContainer: {
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    flex: 1,
+    paddingBottom: 20,
+  }
 });
