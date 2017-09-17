@@ -40,6 +40,12 @@ export default class ResultScreen extends React.Component {
       headerTemp: 21,
       headerClimate: 'Cloudy',
       headerDate: 'Tuesday, 19 Sep',
+      region: {
+        latitude: 55.953252,
+        longitude: -3.188266999999999,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      },
       marker: {
         latlng: {
           latitude: props.marker.lat,
@@ -147,6 +153,7 @@ export default class ResultScreen extends React.Component {
       <View style={styles.container}>
         <MapView
           ref={(ref) => { this.map = ref }}
+          region={this.state.region}
           onRegionChange={this.onRegionChange.bind(this)}
           style={styles.map}>
           <MapView.Marker
