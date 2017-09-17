@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "derisk",
-    "description": "No description",
-    "slug": "derisk",
+    "name": "holmes",
+    "description": "Consulting app for small business providing smart insights into weather, tourism and news-related data",
+    "slug": "holmes",
     "privacy": "public",
     "sdkVersion": "20.0.0",
     "version": "1.0.0",
