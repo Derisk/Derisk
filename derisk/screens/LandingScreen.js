@@ -17,6 +17,15 @@ import Wallpaper from '../components/Wallpaper';
 
 import { Actions, ActionConst } from 'react-native-router-flux';
 
+import {
+  getforecast, 
+  getLeisureTravelIndex,
+  getAchesAndPainsIndex,
+  getDrivingDifficultyIndex,
+  getFrostPotentialIndex,
+  getHeatCoolIndex
+} from '../requests/weather'
+
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
@@ -28,6 +37,8 @@ export default class LandingScreen extends React.Component {
       isLoading: false
     };
   }
+
+
 
   _leaveLanding() {
     Actions.homeScreen();
