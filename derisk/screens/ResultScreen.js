@@ -13,6 +13,19 @@ import { MapView } from 'expo';
 import ResultInfoHeader from "../components/ResultInfoHeader";
 import ResultInfoDetails from "../components/ResultInfoDetails";
 
+import { Actions, ActionConst } from 'react-native-router-flux';
+
+import {
+  getforecast, 
+  getLeisureTravelIndex,
+  getAchesAndPainsIndex,
+  getDrivingDifficultyIndex,
+  getFrostPotentialIndex,
+  getHeatCoolIndex,
+  getTrends,
+  understand
+} from '../requests/weather'
+
 const MARKER_IDENTIFIER = "marker";
 
 let deviceHeight = Dimensions.get('window').height;
@@ -26,6 +39,15 @@ export default class ResultScreen extends React.Component {
       modalY: new Animated.Value(-deviceHeight),
       activeSlide: 0,
       sliderRef: null,
+      headerTemp: 21,
+      headerClimate: 'Cloudy',
+      headerDate: 'Tuesday, 19 Sep',
+      region: {
+        latitude: 55.953252,
+        longitude: -3.188266999999999,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      },
       marker: {
         latlng: {
           latitude: props.marker.lat,
@@ -64,6 +86,16 @@ export default class ResultScreen extends React.Component {
   }
 
   componentDidMount() {
+    getforecast().then(result => {
+      var forecastData = (result[0].day) ? result[0].day : result[0].night;
+      var temp = parseInt(forecastData.temp);
+      var climate = forecastData.phrase_32char;
+      this.setState({headerTemp: temp, headerClimate: climate, headerDate: 'Sunday, 17 Sep'});
+    }).catch(err => {
+        console.error(`getforecast err: ${err}`);
+    });
+
+    console.log(understand(this.props.description));
     //this.map.fitToSuppliedMarkers([MARKER_IDENTIFIER]);
   }
 
@@ -72,10 +104,11 @@ export default class ResultScreen extends React.Component {
   }
 
   openModal() {
-    Animated.timing(this.state.modalY, {
+    /*Animated.timing(this.state.modalY, {
       duration: 300,
       toValue: 0
-    }).start();
+    }).start();*/
+    Actions.advOne();
   }
 
   closeModal() {
@@ -123,6 +156,7 @@ export default class ResultScreen extends React.Component {
       <View style={styles.container}>
         <MapView
           ref={(ref) => { this.map = ref }}
+          region={this.state.region}
           onRegionChange={this.onRegionChange.bind(this)}
           style={styles.map}>
           <MapView.Marker
@@ -134,7 +168,11 @@ export default class ResultScreen extends React.Component {
         </MapView>
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={this.openModal.bind(this)} style={styles.button}>
-            <ResultInfoHeader degrees={21} climate="Mostly Cloudy" date="Saturday, 16 Sep" />
+            <ResultInfoHeader 
+            style={styles.headerContainer} 
+            degrees={this.state.headerTemp} 
+            climate={this.state.headerClimate} 
+            date={this.state.headerDate} />
           </TouchableOpacity>
         </View>
         {Modal}
@@ -155,7 +193,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'blue'
+    backgroundColor: '#4a5159'
   },
   closeButton: {
     paddingRight: 10,
@@ -166,9 +204,9 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
-    backgroundColor: 'blue',
+    backgroundColor: '#4a5159',
     paddingTop: 30,
-    paddingBottom: 15
+    paddingBottom: 15,
   },
   paginationContainer: {
     paddingVertical: 8
@@ -178,5 +216,9 @@ const styles = StyleSheet.create({
     height: 8,
     borderRadius: 4,
     marginHorizontal: 8
+  },
+  headerContainer: {
+    ...StyleSheet.absoluteFillObject,
+    flex: 1
   }
 });

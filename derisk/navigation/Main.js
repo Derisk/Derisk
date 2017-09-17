@@ -12,6 +12,8 @@ import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import LandingScreen from '../screens/LandingScreen'
 
+import { AdvOne, AdvTwo, AdvThree } from '../screens/Advice'
+
 export default class Main extends React.Component {
   _chat() {
     if (this.state.isLoading) return;
@@ -53,6 +55,26 @@ export default class Main extends React.Component {
           />
           <Scene key="resultScreen"
             component={ResultScreen}
+            animation='fade'
+            hideNavBar={true}
+          />
+          <Scene key="resultScreen"
+            component={ResultScreen}
+            animation='fade'
+            hideNavBar={true}
+          />
+          <Scene key="advOne"
+            component={AdvOne}
+            animation='fade'
+            hideNavBar={true}
+          />
+          <Scene key="advTwo"
+            component={AdvTwo}
+            animation='fade'
+            hideNavBar={true}
+          />
+          <Scene key="advThree"
+            component={AdvThree}
             animation='fade'
             hideNavBar={true}
           />

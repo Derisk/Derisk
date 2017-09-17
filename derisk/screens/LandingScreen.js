@@ -17,6 +17,15 @@ import Wallpaper from '../components/Wallpaper';
 
 import { Actions, ActionConst } from 'react-native-router-flux';
 
+import {
+  getforecast, 
+  getLeisureTravelIndex,
+  getAchesAndPainsIndex,
+  getDrivingDifficultyIndex,
+  getFrostPotentialIndex,
+  getHeatCoolIndex
+} from '../requests/weather'
+
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
@@ -29,6 +38,8 @@ export default class LandingScreen extends React.Component {
     };
   }
 
+
+
   _leaveLanding() {
     Actions.homeScreen();
   }
@@ -39,7 +50,7 @@ export default class LandingScreen extends React.Component {
       src={require('../assets/images/wallpaper_alt.jpg')}
       style={styles.fullWidth}>
         <View style={styles.logoContainer}>
-          <Text style={styles.logo}>DERISK</Text>
+          <Text style={styles.logo}>HOLMES</Text>
         </View>
         <TouchableOpacity style={styles.landingButton} onPress={this._leaveLanding}>
         </TouchableOpacity>
