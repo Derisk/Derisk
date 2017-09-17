@@ -134,7 +134,7 @@ export function getHeatCoolIndex(){
 }
 /*********************** Lifestyle (END) ***********************/
 
-const https = require('https');
+/*const https = require('https');
 const async = require('async');
 
 function nodeGet(url, path, headers, callback){
@@ -188,12 +188,12 @@ function nodePost(url, path, headers, post_data, callback){
     });
     x.write(post_data);
     x.end();
-}
+}*/
 
 //token = "0cd67476-c586-4ddd-8200-ba7540a1b291";
-var parseString = require('xml2js').parseString;
+//var parseString = require('xml2js').parseString;
 
-export function getTrends() {
+/*export function getTrends() {
     var token = "";
     var positiveEnts = ["EntertainmentAwardEvent", "SportsEvent"]
     var positiveRels = ["MovieRelease", "Holiday", "CompanyExpansion", "CompanyInvestment", "IPO"]
@@ -257,7 +257,7 @@ export function getTrends() {
             });
         });
     return [positiveTrends, negativeTrends];
-}
+}*/
 
 function fill(r, group, type, result) {
     if (r._typeGroup == group && r._type == type)
@@ -269,7 +269,7 @@ function fill2(r, group, result) {
         result[r._typeGroup] = r.name
 }
 
-export function understand(text) {
+/*export function understand(text) {
     var result = {}
     nodePost("api.thomsonreuters.com", "/permid/calais", {
         "Accept": "application/json",
@@ -286,4 +286,32 @@ export function understand(text) {
             }
             return result;
         });
+}*/
+
+export function understand(text) {
+  return fetch("https://api.thomsonreuters.com/permid/calais", {
+    method: 'POST',
+    headers: {
+      "Accept": "application/json",
+      "x-ag-access-token": "wlj9Duv0lY1QKUs0hvnGvXgBmdgJJLoP",
+      "outputFormat": "application/json"
+    },
+    body: text
+  })
+  .then((response) => {
+    var result = {};
+    for (var key in response) {
+          fill(r[key], "entities", "Country", result);
+          fill(r[key], "entities", "City", result);
+          fill(r[key], "entities", "Position", result);
+          fill2(r[key], "industry", result);
+          fill(r[key], "entities", "Organization", result);
+          fill(r[key], "entities", "Region", result);
+      }
+
+    return Promise.resolve(result);
+  })
+  .catch(error => {
+    return Promise.reject(error);
+  });
 }
