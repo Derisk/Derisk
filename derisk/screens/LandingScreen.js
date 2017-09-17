@@ -50,7 +50,7 @@ export default class LandingScreen extends React.Component {
       src={require('../assets/images/wallpaper_alt.jpg')}
       style={styles.fullWidth}>
         <View style={styles.logoContainer}>
-          <Text style={styles.logo}>DERISK</Text>
+          <Text style={styles.logo}>HOLMES</Text>
         </View>
         <TouchableOpacity style={styles.landingButton} onPress={this._leaveLanding}>
         </TouchableOpacity>

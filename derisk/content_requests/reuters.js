@@ -57,7 +57,7 @@ function nodePost(url, path, headers, post_data, callback){
 //token = "0cd67476-c586-4ddd-8200-ba7540a1b291";
 var parseString = require('xml2js').parseString;
 
-function getTrends() {
+export function getTrends() {
     var token = "";
     var positiveEnts = ["EntertainmentAwardEvent", "SportsEvent"]
     var positiveRels = ["MovieRelease", "Holiday", "CompanyExpansion", "CompanyInvestment", "IPO"]
@@ -122,5 +122,3 @@ function getTrends() {
         });
     return [positiveTrends, negativeTrends];
 }
-
-getTrends();

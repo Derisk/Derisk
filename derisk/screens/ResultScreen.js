@@ -21,7 +21,9 @@ import {
   getAchesAndPainsIndex,
   getDrivingDifficultyIndex,
   getFrostPotentialIndex,
-  getHeatCoolIndex
+  getHeatCoolIndex,
+  getTrends,
+  understand
 } from '../requests/weather'
 
 const MARKER_IDENTIFIER = "marker";
@@ -89,10 +91,11 @@ export default class ResultScreen extends React.Component {
       var temp = parseInt(forecastData.temp);
       var climate = forecastData.phrase_32char;
       this.setState({headerTemp: temp, headerClimate: climate, headerDate: 'Sunday, 17 Sep'});
-
     }).catch(err => {
         console.error(`getforecast err: ${err}`);
     });
+
+    console.log(understand(this.props.description));
     //this.map.fitToSuppliedMarkers([MARKER_IDENTIFIER]);
   }
 
