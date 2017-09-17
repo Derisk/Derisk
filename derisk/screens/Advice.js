@@ -32,13 +32,11 @@ const styles = StyleSheet.create({
 
 
 export class AdvOne extends React.Component {
-  static navigationOptions = {
-    title: 'Advice',
-  };
+  
 
   render() {
     return (
-      <Wallpaper src={require('../assets/images/advone.png')}>
+      <Wallpaper src={require('../assets/images/adv1.png')}>
         <View style={styles.btnGroup}>
           <TouchableOpacity 
           style={styles.hiddenBtn}
@@ -59,13 +57,11 @@ export class AdvOne extends React.Component {
 }
 
 export class AdvTwo extends React.Component {
-  static navigationOptions = {
-    title: 'Advice',
-  };
+  
 
   render() {
     return (
-      <Wallpaper src={require('../assets/images/advone.png')}>
+      <Wallpaper src={require('../assets/images/adv2.png')}>
         <View style={styles.btnGroup}>
           <TouchableOpacity 
           style={styles.hiddenBtn}
@@ -86,13 +82,11 @@ export class AdvTwo extends React.Component {
 }
 
 export class AdvThree extends React.Component {
-  static navigationOptions = {
-    title: 'Advice',
-  };
+  
 
   render() {
     return (
-      <Wallpaper src={require('../assets/images/advone.png')}>
+      <Wallpaper src={require('../assets/images/adv3.png')}>
         <View style={styles.btnGroup}>
           <TouchableOpacity 
           style={styles.hiddenBtn}
@@ -103,7 +97,26 @@ export class AdvThree extends React.Component {
           <TouchableOpacity 
           style={styles.hiddenBtn}
           onPress={() => {
-            Actions.advTwo();
+            Actions.advFour();
+          }}>
+          </TouchableOpacity>
+        </View>
+      </Wallpaper>
+    );
+  }
+}
+
+export class AdvFour extends React.Component {
+  
+
+  render() {
+    return (
+      <Wallpaper src={require('../assets/images/adv4.png')}>
+        <View style={styles.btnGroup}>
+          <TouchableOpacity 
+          style={styles.hiddenBtn}
+          onPress={() => {
+            Actions.pop();
           }}>
           </TouchableOpacity>
         </View>

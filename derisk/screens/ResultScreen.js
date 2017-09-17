@@ -95,7 +95,11 @@ export default class ResultScreen extends React.Component {
         console.error(`getforecast err: ${err}`);
     });
 
-    console.log(understand(this.props.description));
+    understand(this.props.description).then(result => {
+      console.log("understand", result)
+    }).catch(err => {
+        console.error(`understand err: ${err}`);
+    });
     //this.map.fitToSuppliedMarkers([MARKER_IDENTIFIER]);
   }
 

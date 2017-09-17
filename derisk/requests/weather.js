@@ -299,14 +299,15 @@ export function understand(text) {
     body: text
   })
   .then((response) => {
+    const responseBody = JSON.parse(response._bodyInit)
     var result = {};
-    for (var key in response) {
-          fill(r[key], "entities", "Country", result);
-          fill(r[key], "entities", "City", result);
-          fill(r[key], "entities", "Position", result);
-          fill2(r[key], "industry", result);
-          fill(r[key], "entities", "Organization", result);
-          fill(r[key], "entities", "Region", result);
+    for (var key in responseBody) {
+          fill(responseBody[key], "entities", "Country", result);
+          fill(responseBody[key], "entities", "City", result);
+          fill(responseBody[key], "entities", "Position", result);
+          fill2(responseBody[key], "industry", result);
+          fill(responseBody[key], "entities", "Organization", result);
+          fill(responseBody[key], "entities", "Region", result);
       }
 
     return Promise.resolve(result);

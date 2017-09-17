@@ -12,7 +12,7 @@ import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import LandingScreen from '../screens/LandingScreen'
 
-import { AdvOne, AdvTwo, AdvThree } from '../screens/Advice'
+import { AdvOne, AdvTwo, AdvThree, AdvFour } from '../screens/Advice'
 
 export default class Main extends React.Component {
   _chat() {
@@ -65,17 +65,22 @@ export default class Main extends React.Component {
           />
           <Scene key="advOne"
             component={AdvOne}
-            animation='fade'
+            direction='horizontal'
             hideNavBar={true}
           />
           <Scene key="advTwo"
             component={AdvTwo}
-            animation='fade'
+            direction='horizontal'
             hideNavBar={true}
           />
           <Scene key="advThree"
             component={AdvThree}
-            animation='fade'
+            direction='horizontal'
+            hideNavBar={true}
+          />
+          <Scene key="advFour"
+            component={AdvFour}
+            direction='horizontal'
             hideNavBar={true}
           />
         </Scene>
