@@ -100,3 +100,52 @@ function getHeatCoolIndex(){
     return result;
 }
 /*********************** Lifestyle (END) ***********************/
+
+/*********************** Predictor (BEGIN) ***********************/
+
+const https = require('https');
+
+function nodeGet(url, path, headers, callback){
+    var options = {
+            host: url,
+            path: path,
+            method: 'GET',
+            headers: headers,
+        };
+
+    console.log("Start");
+    var x = https.request(options, function(res){
+        console.log("Connected");
+        res.on('data', function(data) {
+            console.log(data.toString('utf8'));
+            callback(JSON.parse(data.toString('utf8').replace("{ }", "{}")));
+        });
+    });
+
+    x.end();
+}
+
+instance_id = "0cd67476-c586-4ddd-8200-ba7540a1b291";
+
+function getToken() {
+    var token = "";
+    nodeGet("ibm-watson-ml.mybluemix.net", "/v3/identity/token", {
+    "Authorization": "Basic MDNhNGQwMGYtZmZlZi00MmExLTg5ZmUtODk3NWMxMmIy" +
+        "NjA0OjVmOTY1MDQwLTliM2YtNGQ0OC1iOWZmLTgzMDYwYTM2ZDMxOA=="},
+        function(response) {
+            token = response.token;
+            auth_headers =  {
+              "Content-Type": "application/json", "Accept": "application/json",
+              "Authorization": "Bearer " + token}
+            nodeGet("ibm-watson-ml.mybluemix.net", "/v3/wml_instances/" + instance_id, auth_headers,
+                function(response) {
+                    nodeGet("ibm-watson-ml.mybluemix.net", "/v3/wml_instances/" + instance_id + "/published_models",
+                    auth_headers,
+                        function(response) {
+                            console.log(response);
+                        });
+                });
+        });
+}
+
+getToken();
